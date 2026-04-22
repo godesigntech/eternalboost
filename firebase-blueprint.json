@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "Service": {
+      "title": "Service",
+      "description": "Boosting or coaching service package",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "type": { "type": "string", "enum": ["boosting", "coaching"] },
+        "features": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["name", "price", "type"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "User session booking for coaching",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "serviceId": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "timeSlot": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "completed", "cancelled"] },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "serviceId", "date", "timeSlot", "status", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Public and private user data",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "discordId": { "type": "string" },
+        "rocketLeagueRank": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    }
+  },
+  "firestore": {
+    "services/{serviceId}": {
+      "schema": "Service",
+      "description": "Available boosting and coaching services"
+    },
+    "bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "User bookings for coaching sessions"
+    },
+    "users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data"
+    }
+  }
+}
